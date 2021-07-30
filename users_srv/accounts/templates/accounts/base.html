@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+    <main id="content">
+      {% block content %}
+      {% endblock %}
+    </main>
+    <footer>
+        <div class="copyright">
+            <p>Тестовое задание для компании EmphaSoft. Баталов Сергей &copy; 2021</p>
+        </div>
+    </footer>
+</body>
+</html>
