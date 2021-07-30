@@ -29,4 +29,22 @@
 {% endfor %}
     </tbody>
 </table>
+<div class="new-account-link">
+    <p id="new_account">
+        <a href="{% url 'accounts:new_account' %}">ADD NEW</a>
+    </p>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if accounts.has_previous %}
+            <a href="?page={{ accounts.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}
+        </span>
+        {% if accounts.has_next %}
+            <a href="?page={{ accounts.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

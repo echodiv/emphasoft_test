@@ -42,10 +42,39 @@ main {
    color: #ffffff;
    font-weight: bold;
 }
+.new-account-link{
+    display: flex;
+    justify-content: center;
+}
+#new-account {
+    background-color: #191f19;
+    border: 1px solid #4F4F4F;
+    color: #00abff;
+}
+
 /* login */
 .login-form {
     display: flex;
     justify-content: center;
+}
+
+/* create user*/
+.create-account-form {
+
+}
+.account-value {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+/* pagination */
+.pagination {
+	display: flex;
+	justify-content: center;
+    margin:40px 0;
+    font-weight:bold;
 }
 
 /* top block */
