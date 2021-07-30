@@ -24,21 +24,44 @@ h2 {
 /* CONTENT */
 main {
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
 }
 
 #content {
-    float:left;
-    width:60%;
+    width:90%;
     padding:0 0 0 30px;
 }
 
 /* List of accounts*/
+.user-list {
+    width: 100%;
+}
 .user-list thead{
    background-color: #191919;
    border: 2px solid #4F4F4F;
    color: #ffffff;
    font-weight: bold;
+}
+/* login */
+.login-form {
+    display: flex;
+    justify-content: center;
+}
+
+/* top block */
+.head {
+    width: 100%;
+    background-color: #e8e8e8;
+    display: flex;
+    justify-content: space-between;
+}
+.user-name{
+    display: flex;
+    justify-content: start;
+}
+.user-actions{
+    display: flex;
+    justify-content: end;
 }
 
 /* FOOTER */

@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from django.contrib.auth.models import User
 
 
-class UserListView(View):
+class UserListView(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
         all_accounts = User.objects.all()

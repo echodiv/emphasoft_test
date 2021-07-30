@@ -7,9 +7,17 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-    <main id="content">
-      {% block content %}
-      {% endblock %}
+    <main>
+        <div id="content">
+    {% if user.is_authenticated %}
+    <div class="head">
+        <div class="user-name">Hi, {{ user.username }}</div>
+        <div class="user-actions"><a href="{% url 'logout' %}">Logout</a></div>
+    </div>
+    {% endif %}
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
     <footer>
         <div class="copyright">

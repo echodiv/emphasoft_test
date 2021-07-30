@@ -14,5 +14,7 @@ fi
 # чистим и мигрируем
 python manage.py flush --no-input
 python manage.py migrate
+# собираем статику
+python manage.py collectstaic
 
 exec "$@"
