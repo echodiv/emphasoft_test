@@ -19,14 +19,15 @@
     <tbody>
 {% for account in accounts %}
     <tr>
-        <td>{{ account.id }}</td>
+        <td><a href="{% url 'accounts:account_detail' account.id %}">{{ account.id }}</a></td>
         <td>{{ account.username }}</td>
         <td>{{ account.first_name }}</td>
         <td>{{ account.last_name }}</td>
         <td>{{ account.is_active }}</td>
         <td>{{ account.is_superuser }}</td>
         <td>{{ account.last_login }}</td>
-        <td>
+        <td class="account-actions">
+            <a href="{% url 'accounts:account_update' account.id %}">Update</a>
             <form method="post" action="{% url 'accounts:account_delete' account.id %}">
                 {% csrf_token %}
                 <input type="submit" value="X">

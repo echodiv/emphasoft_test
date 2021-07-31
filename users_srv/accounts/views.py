@@ -1,11 +1,9 @@
-from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DeleteView
-from django.http import HttpResponseRedirect
+from django.views.generic import DeleteView, UpdateView, DetailView
 
 from django.contrib.auth.models import User
 
@@ -70,3 +68,48 @@ class DeleteAccountView(LoginRequiredMixin, DeleteView):
     """
     model = User
     success_url = reverse_lazy('accounts:accounts_list')
+
+
+class UpdateAccountView(LoginRequiredMixin, UpdateView):
+    """
+    Обновление информации об аккаунте пользователя
+    """
+    model = User
+    template_name = "accounts/update.html"
+    success_url = reverse_lazy('accounts:accounts_list')
+    fields = [
+        'username',
+        'last_name',
+        'first_name',
+        'password',
+        'email',
+        'is_active',
+        'is_superuser'
+    ]
+
+    def form_valid(self, form):
+        """
+        Необходима для правильной обработки пароля
+        """
+        password = form.cleaned_data.get('password')
+        if not password:
+            return super().form_valid(form)
+
+        self.object.set_password(password)
+        return super().form_valid(form)
+
+
+class AccountDetailView(LoginRequiredMixin, DetailView):
+    """
+    Детальная информация о пользователе
+    """
+    model = User
+    template_name = "accounts/detail.html"
+    fields = [
+        'username',
+        'last_name',
+        'first_name',
+        'email',
+        'is_active',
+        'is_superuser'
+    ]

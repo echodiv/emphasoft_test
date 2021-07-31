@@ -51,6 +51,10 @@ main {
     border: 1px solid #4F4F4F;
     color: #00abff;
 }
+.account-actions {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* login */
 .login-form {
@@ -80,6 +84,7 @@ main {
     background-color: #e8e8e8;
     display: flex;
     justify-content: space-between;
+    font-size: 20pt;
 }
 .user-name{
     display: flex;

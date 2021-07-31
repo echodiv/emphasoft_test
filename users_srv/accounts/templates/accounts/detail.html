@@ -1,0 +1,39 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}Создание нового пользователя{% endblock %}
+
+{% block content %}
+
+<table class="user-list">
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Is active?</th>
+        <th>Is superuser?</th>
+        <th>Last login</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.username }}</td>
+        <td>{{ object.first_name }}</td>
+        <td>{{ object.last_name }}</td>
+        <td>{{ object.is_active }}</td>
+        <td>{{ object.is_superuser }}</td>
+        <td>{{ object.last_login }}</td>
+        <td class="account-actions">
+            <a href="{% url 'accounts:account_update' object.id %}">Update</a>
+            <form method="post" action="{% url 'accounts:account_delete' object.id %}">
+                {% csrf_token %}
+                <input type="submit" value="X">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
