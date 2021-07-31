@@ -13,6 +13,7 @@
         <th>Is active?</th>
         <th>Is superuser?</th>
         <th>Last login</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -25,13 +26,19 @@
         <td>{{ account.is_active }}</td>
         <td>{{ account.is_superuser }}</td>
         <td>{{ account.last_login }}</td>
+        <td>
+            <form method="post" action="{% url 'accounts:account_delete' account.id %}">
+                {% csrf_token %}
+                <input type="submit" value="X">
+            </form>
+        </td>
     </tr>
 {% endfor %}
     </tbody>
 </table>
 <div class="new-account-link">
     <p id="new_account">
-        <a href="{% url 'accounts:new_account' %}">ADD NEW</a>
+        <a href="{% url 'accounts:account_manage' %}">ADD NEW</a>
     </p>
 </div>
 <div class="pagination">

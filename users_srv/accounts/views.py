@@ -1,7 +1,11 @@
+from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DeleteView
+from django.http import HttpResponseRedirect
 
 from django.contrib.auth.models import User
 
@@ -31,7 +35,7 @@ class UserListView(LoginRequiredMixin, View):
                       })
 
 
-class NewAccountView(LoginRequiredMixin, View):
+class AccountManageView(LoginRequiredMixin, View):
     """
     Заведение нового аккаунта в систему
     """
@@ -60,3 +64,9 @@ class NewAccountView(LoginRequiredMixin, View):
                           {'form': form, 'flash': form.errors})
 
 
+class DeleteAccountView(LoginRequiredMixin, DeleteView):
+    """
+    Удаление пользователя из системы
+    """
+    model = User
+    success_url = reverse_lazy('accounts:accounts_list')

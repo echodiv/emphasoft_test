@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 
 class NewAccountForm(forms.ModelForm):
+    """ФОрма для заведения нового аккаунта в систему
+    """
     class Meta:
         model = User
         fields = [
