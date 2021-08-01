@@ -81,7 +81,6 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
         'username',
         'last_name',
         'first_name',
-        'password',
         'email',
         'is_active',
         'is_superuser'
