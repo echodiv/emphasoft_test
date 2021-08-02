@@ -1,0 +1,4 @@
+[flake8]
+per-file-ignores =
+    # imported but unused
+    users_srv/users_srv/settings.py: E501
