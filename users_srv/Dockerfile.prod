@@ -1,0 +1,57 @@
+###########
+# BUILDER #
+###########
+# pull official base image
+FROM python:3.8 as builder
+
+# set work directory
+WORKDIR /usr/src/emphasoft_test
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install dependencies
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/emphasoft_test/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/emphasoft_test/wheels gunicorn==20.0.4
+
+#########
+# FINAL #
+#########
+# pull official base image
+FROM python:3.8
+
+# create directory for the app user
+RUN mkdir -p /home/emphasoft_test
+
+# create the app user
+RUN useradd -ms /bin/bash emphasoft_test
+
+# create the appropriate directories
+ENV HOME=/home/emphasoft_test
+ENV APP_HOME=/home/emphasoft_test/users_srv
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/static
+WORKDIR $APP_HOME
+
+# install dependencies
+RUN apt-get update && apt-get install -y netcat
+COPY --from=builder /usr/src/emphasoft_test/wheels /wheels
+COPY --from=builder /usr/src/emphasoft_test/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+# copy entrypoint-prod.sh
+COPY ./entrypoint.prod.sh $APP_HOME
+
+# copy project
+COPY . $APP_HOME
+
+# chown all the files to the app user
+RUN chown -R emphasoft_test:emphasoft_test $APP_HOME
+
+# change to the app user
+USER emphasoft_test
+
+# run entrypoint.prod.sh
+ENTRYPOINT ["/home/emphasoft_test/users_srv/entrypoint.prod.sh"]

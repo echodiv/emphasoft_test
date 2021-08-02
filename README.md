@@ -52,3 +52,15 @@ sudo docker-compose up -d --build
 # остановить и удалить собранные образы
 sudo docker-compose down -v
 ```
+## Разворот на продуктовом сервере
+```bash
+# собрать docker контейнеры и запустить
+sudo docker-compose -f docker-compose.prod.yaml up -d --build
+sudo docker-compose -f docker-compose.prod.yaml exec web python manage.py migrate
+sudo docker-compose -f docker-compose.prod.yaml exec web python manage.py collectstatic
+
+# остановить и удалить собранные образы
+sudo docker-compose -f docker-compose.prod.yaml down -v
+
+```
+Продуктовый разворот включает в себя [nginx](./nginx/nginx.conf)
