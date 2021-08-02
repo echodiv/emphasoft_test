@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from django.http import HttpRequest
+from rest_framework.request import Request
 
 from .serializers import UserSerializer
 
@@ -16,7 +16,7 @@ class UsersListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def post(self, request: HttpRequest) -> Response:
+    def post(self, request: Request) -> Response:
         """
         Создание нового пользователя
         """
@@ -40,12 +40,12 @@ class UsersDetailView(APIView):
             int(pk)
             user = User.objects.get(id=pk)
         except ValueError:
-            return Response({'error': f'invalid id value'}, status=402)
+            return Response({'error': 'invalid id value'}, status=402)
         except User.DoesNotExist:
             return Response(data='', status=404)
         return user
 
-    def get(self, request: HttpRequest, pk: str) -> Response:
+    def get(self, request: Request, pk: str) -> Response:
         """
         Получение данных о конкретном пользователе
         """
@@ -55,7 +55,7 @@ class UsersDetailView(APIView):
         serialized_user = self.serializer_class(user)
         return Response(serialized_user.data)
 
-    def put(self, request: HttpRequest, pk: str) -> Response:
+    def put(self, request: Request, pk: str) -> Response:
         """
         Замена данных о пользователе (если он существует)
         """
@@ -68,7 +68,7 @@ class UsersDetailView(APIView):
             return Response(serializer.data, status=201)
         return Response({'errors': serializer.errors})
 
-    def patch(self, request: HttpRequest, pk: str) -> Response:
+    def patch(self, request: Request, pk: str) -> Response:
         """
         Обновление данных о пользователе
         """
@@ -83,7 +83,7 @@ class UsersDetailView(APIView):
             return Response(serializer.data, status=201)
         return Response({'errors': serializer.errors})
 
-    def delete(self, request: HttpRequest, pk: str) -> Response:
+    def delete(self, request: Request, pk: str) -> Response:
         """
         Удаление пользователя по идентификатору
         """

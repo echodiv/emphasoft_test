@@ -16,7 +16,7 @@ jobs:
     - name: Install pip packages
       run: |
         python3 -m venv .venv
-        .venv/bin/pip install mypy flake8 django-stubs
+        .venv/bin/pip install mypy flake8 django-stubs djangorestframework-stubs
     - name: Run flake8
       run: .venv/bin/python -m flake8 users_srv/
     - name: Run mypy
