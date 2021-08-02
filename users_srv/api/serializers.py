@@ -1,3 +1,5 @@
+from typing import Dict
+
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 
@@ -24,7 +26,19 @@ class UserSerializer(ModelSerializer):
             'password': {'write_only': True}
         }
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict) -> User:
         user = User.objects.create_user(**validated_data)
         user.save()
         return user
+
+    def update(self, instance: User, validated_data: Dict) -> User:
+        if "password" in validated_data:
+            instance.set_password(validated_data['password'])
+            del validated_data['password']
+        if not self.partial:
+            instance.first_name = ''
+            instance.last_name = ''
+            instance.is_active = True
+            instance.last_login = None
+            instance.is_superuser = False
+        return super().update(instance, validated_data)
