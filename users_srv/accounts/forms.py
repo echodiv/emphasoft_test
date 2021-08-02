@@ -17,3 +17,13 @@ class NewAccountForm(forms.ModelForm):
             'is_active',
             'is_superuser'
         ]
+
+    def save(self, commit=True):
+        """
+        Необходима для правильной обработки пароля
+        """
+        if 'password' in self.cleaned_data:
+            self.instance.set_password(self.cleaned_data['password'])
+            del self.cleaned_data['password']
+
+        return super().save(commit=commit)
