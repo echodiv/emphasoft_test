@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DeleteView, UpdateView, DetailView
-
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.contrib.auth.models import User
 
 from .forms import NewAccountForm
@@ -12,7 +12,7 @@ from .forms import NewAccountForm
 
 class UserListView(LoginRequiredMixin, View):
     @staticmethod
-    def get(request):
+    def get(request: HttpRequest) -> HttpResponse:
         """
         Отображение всех аккаунтов заведенных в системе
         """
@@ -38,7 +38,7 @@ class AccountManageView(LoginRequiredMixin, View):
     Заведение нового аккаунта в систему
     """
     @staticmethod
-    def get(request):
+    def get(request: HttpRequest) -> HttpResponse:
         """
         Отображение формы заведения аккаунта
         """
@@ -46,7 +46,7 @@ class AccountManageView(LoginRequiredMixin, View):
         return render(request, 'accounts/create.html', {'form': form})
 
     @staticmethod
-    def post(request):
+    def post(request: HttpRequest) -> HttpResponse:
         """
         Обработка запроса на заведение нового аккаунта
         """
@@ -86,7 +86,7 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
         'is_superuser'
     ]
 
-    def form_valid(self, form):
+    def form_valid(self, form) -> HttpResponseRedirect:
         """
         Необходима для правильной обработки пароля
         """

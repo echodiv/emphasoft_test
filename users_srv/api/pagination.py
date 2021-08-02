@@ -1,3 +1,5 @@
+from typing import Dict
+
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
@@ -6,7 +8,7 @@ class SimplePagination(PageNumberPagination):
     """
     Пагинация для вывода всех пользователей без метаданных
     """
-    def get_paginated_response(self, data):
+    def get_paginated_response(self, data: Dict) -> Response:
         return Response({
             'data': data,
             'meta': {
