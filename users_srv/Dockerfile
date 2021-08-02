@@ -1,14 +1,14 @@
 # pull official base image
-FROM python:3.8.3-alpine
+FROM python:3.8
 # set work directory
 WORKDIR /usr/src/users_srv
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+# for db ping
+RUN apt-get update \
+    && apt-get install -y netcat
 
 # install dependencies
 RUN pip install --upgrade pip

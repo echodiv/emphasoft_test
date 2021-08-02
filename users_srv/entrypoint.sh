@@ -1,20 +1,20 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
+if [ "$DATABASE" = "mysql" ]
 then
-    echo "Waiting for postgres..."
+    echo "Waiting for database..."
 
     while ! nc -z $SQL_HOST $SQL_PORT; do
       sleep 0.1
     done
 
-    echo "PostgreSQL started"
+    echo "Database started"
 fi
-
+#sleep 10
 # чистим и мигрируем
 python manage.py flush --no-input
 python manage.py migrate
 # собираем статику
-python manage.py collectstaic
+python manage.py collectstatic
 
 exec "$@"
