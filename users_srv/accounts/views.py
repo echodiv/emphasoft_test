@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DeleteView, UpdateView, DetailView
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.models import User
 
 from .forms import NewAccountForm
@@ -85,17 +85,6 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
         'is_active',
         'is_superuser'
     ]
-
-    def form_valid(self, form) -> HttpResponseRedirect:
-        """
-        Необходима для правильной обработки пароля
-        """
-        password = form.cleaned_data.get('password')
-        if not password:
-            return super().form_valid(form)
-
-        self.object.set_password(password)
-        return super().form_valid(form)
 
 
 class AccountDetailView(LoginRequiredMixin, DetailView):
