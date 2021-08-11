@@ -1,12 +1,12 @@
 from django.conf.urls import url
 
-from .views import UsersListViewSet, UserDetailViewSet
+from .views import UsersViewSet
 
 
 app_name = 'api'
 
 urlpatterns = [
-       url(r'^users/(?P<pk>[\w]+)/$', UserDetailViewSet.as_view(
+       url(r'^users/(?P<pk>[\w]+)/$', UsersViewSet.as_view(
            {
                'get': 'retrieve',
                'put': 'update',
@@ -15,7 +15,7 @@ urlpatterns = [
            }
        ),
            name='user_manage'),
-       url(r'^users/$', UsersListViewSet.as_view(
+       url(r'^users/$', UsersViewSet.as_view(
            {
                'get': 'list',
                'post': 'create',
